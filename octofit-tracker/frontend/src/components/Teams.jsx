@@ -1,6 +1,14 @@
 import { useEffect, useState } from 'react';
 import { fetchCollection } from '../api';
 
+// VITE_CODESPACE_NAME must be defined (e.g. in `.env.local`) when running inside a GitHub Codespace.
+const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
+
+// Fall back to localhost so the app never requests `https://undefined-8000...` when the var is unset.
+const API_URL = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev/api/teams/`
+  : 'http://localhost:8000/api/teams/';
+
 function Teams() {
   const [teams, setTeams] = useState([]);
   const [error, setError] = useState(null);
@@ -9,7 +17,7 @@ function Teams() {
   useEffect(() => {
     let isMounted = true;
 
-    fetchCollection('teams')
+    fetchCollection(API_URL)
       .then((data) => {
         if (isMounted) setTeams(data);
       })
