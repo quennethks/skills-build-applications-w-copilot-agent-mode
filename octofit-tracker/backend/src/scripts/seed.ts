@@ -4,6 +4,7 @@ import { Activity, LeaderboardEntry, Team, User, Workout } from '../models';
 
 async function seedDatabase() {
   try {
+    console.log('Seed the octofit_db database with test data');
     await connectToDatabase();
 
     if (mongoose.connection.readyState !== 1) {
