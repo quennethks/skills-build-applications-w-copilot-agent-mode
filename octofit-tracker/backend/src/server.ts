@@ -1,3 +1,4 @@
+import cors from 'cors';
 import express, { type Request, type Response } from 'express';
 import { connectToDatabase, getApiBaseUrl } from './config/database';
 import { Activity, LeaderboardEntry, Team, User, Workout } from './models';
@@ -5,6 +6,9 @@ import { Activity, LeaderboardEntry, Team, User, Workout } from './models';
 const app = express();
 const port = Number(process.env.PORT) || 8000;
 const baseUrl = getApiBaseUrl();
+
+// Allow the frontend (localhost or its Codespaces URL) to call this API cross-origin
+app.use(cors());
 
 const fallbackData: Record<string, any[]> = {
   users: [
